@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
+import os
 
 sns.set(style='dark')
 
@@ -87,8 +88,8 @@ def create_weather(day_df):
 
 # ======================================================== Load Cleaned Data ======================================================== #
 
-days_df = pd.read_csv('day_data_clean.csv')
-hours_df = pd.read_csv('hour_data_clean.csv')
+file_path = os.path.join(os.path.dirname(__file__), 'day_data_clean.csv')
+days_df = pd.read_csv(file_path)
 
 datetime_columns = ['dteday']
 days_df.sort_values(by='dteday', inplace=True)

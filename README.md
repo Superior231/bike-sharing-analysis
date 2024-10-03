@@ -2,9 +2,9 @@
 ## Instalasi
 Clone repository ini ke komputer Anda dan jalankan perintah berikut:
 
-   ```shell
-   git clone https://github.com/Superior231/bike-sharing-analysis.git
-   ```
+```shell
+git clone https://github.com/Superior231/bike-sharing-analysis.git
+```
 
 Pastikan Anda sudah membuat Virtual Environtment terlebih dahulu. Anda dapat menginstal library dengan menjalankan perintah berikut:
 

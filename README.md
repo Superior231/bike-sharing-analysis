@@ -8,15 +8,15 @@ Clone repository ini ke komputer Anda dan jalankan perintah berikut:
 
 Pastikan Anda sudah membuat Virtual Environtment terlebih dahulu. Anda dapat menginstal library dengan menjalankan perintah berikut:
 
-    ```shell
-    pip install streamlit
-    pip install -r requirements.txt
-    ```
+```shell
+cd bike-sharing/dashboard/
+streamlit run dashboard.py
+```
 
 ## Usage
 Masuk ke direktori proyek (Local):
 
-    ```shell
-    cd bike-sharing-analysis/dashboard/
-    streamlit run dashboard.py
-    ```
+```shell
+cd bike-sharing-analysis/dashboard/
+streamlit run dashboard.py
+```

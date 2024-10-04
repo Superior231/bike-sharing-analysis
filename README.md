@@ -9,7 +9,6 @@ git clone https://github.com/Superior231/bike-sharing-analysis.git
 Pastikan Anda sudah membuat Virtual Environtment terlebih dahulu. Anda dapat menginstal library dengan menjalankan perintah berikut:
 
 ```shell
-pip install streamlit
 pip install -r requirements.txt
 ```
 

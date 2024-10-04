@@ -51,38 +51,23 @@ def create_total_casual_df(day_df):
    return casual_df
 
 
-#  Season
+# Season
 def create_season(day_df):
-    # Menentukan musim berdasarkan bulan (karean yang ada di clean ada, data typenya categorical)
-    def get_season(month):
-        if month in [12, 1, 2]:
-            return 'Winter'
-        elif month in [3, 4, 5]:
-            return 'Spring'
-        elif month in [6, 7, 8]:
-            return 'Summer'
-        else:
-            return 'Fall'
-        
-    day_df['season'] = day_df['dteday'].dt.month.apply(get_season)
-    return day_df
-
+    # Mengelompokkan berdasarkan musim
+    season_df = day_df.groupby('season').agg({
+        'count_rental': 'sum'
+    }).reset_index()
+    
+    return season_df
 
 # Weather
 def create_weather(day_df):
-    # Menentukan musim berdasarkan bulan (karean yang ada di clean ada, data typenya categorical)
-    def get_weather(weathers):
-        if weathers == 1:
-            return 'Clear'
-        elif weathers == 2:
-            return 'Cloudy'
-        elif weathers == 3:
-            return 'Light Rain'
-        else:
-            return 'Heavy Rain'
-
-    day_df['weather'] = day_df['dteday'].dt.month.apply(get_weather)
-    return day_df
+    # Mengelompokkan berdasarkan cuaca
+    weather_df = day_df.groupby('weather').agg({
+        'count_rental': 'sum'
+    }).reset_index()
+    
+    return weather_df
 
 
 
@@ -229,7 +214,7 @@ plt.pie(
     labels=agg_data['category_day'],
     autopct='%1.1f%%',  # Menampilkan persentase
     startangle=90,
-    colors=colors  # Menggunakan palette warna
+    colors=colors
 )
 st.pyplot(plt)
 
@@ -261,22 +246,41 @@ st.pyplot(plt)
 
 # Penyewaan Berdasarkan Musim dan Cuaca
 st.subheader('Penyewaan Berdasarkan Musim dan Cuaca')
-col1, col2 = st.columns(2)
+
+fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(35, 15))
 
 # Season
-with col1:
-    plt.figure(figsize=(10, 6))
-    sns.barplot(x='season', y='count_rental', data=season_df, palette='Set2')
-    plt.title('Penyewaan Sepeda Berdasarkan Musim', fontsize=20)
-    plt.xticks(fontsize=12)
-    plt.yticks(fontsize=12)
-    st.pyplot(plt)
+sns.barplot(
+    y='count_rental', 
+    x='season',
+    data=season_df.sort_values(by='season', ascending=False),
+    ax=ax[0],
+    hue='season',
+    legend=False
+)
+
+# Mengatur judul, label, dan tick params
+ax[0].set_title('Grafik Musim', loc='center', fontsize=50)
+ax[0].set_ylabel(None)
+ax[0].set_xlabel(None)
+ax[0].tick_params(axis='x', labelsize=35)
+ax[0].tick_params(axis='y', labelsize=30)
 
 # Weather
-with col2:
-    plt.figure(figsize=(10, 6))
-    sns.barplot(x='weather', y='count_rental', data=season_df, palette='Set2')
-    plt.title('Penyewaan Sepeda Berdasarkan Cuaca', fontsize=20)
-    plt.xticks(fontsize=12)
-    plt.yticks(fontsize=12)
-    st.pyplot(plt)
+sns.barplot(
+    y='count_rental', 
+    x='weather',
+    data=weather_df.sort_values(by='weather', ascending=False),
+    ax=ax[1],
+    hue='weather',
+    legend=False
+)
+
+# Mengatur judul, label, dan tick params
+ax[1].set_title('Grafik Cuaca', loc='center', fontsize=50)
+ax[1].set_ylabel(None)
+ax[1].set_xlabel(None)
+ax[1].tick_params(axis='x', labelsize=35)
+ax[1].tick_params(axis='y', labelsize=30)
+
+st.pyplot(fig)
